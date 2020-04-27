@@ -1,11 +1,36 @@
 #! /usr/bin/env python3
 
+"""
+Install these packages before running the script
+
+beautifulsoup4==4.9.0
+bs4==0.0.1
+certifi==2020.4.5.1
+chardet==3.0.4
+idna==2.9
+lxml==4.5.0
+numpy==1.18.3
+pandas==1.0.3
+pyfiglet==0.8.post1
+python-dateutil==2.8.1
+pytz==2019.3
+requests==2.23.0
+six==1.14.0
+soupsieve==2.0
+tabulate==0.8.7
+termcolor==1.1.0
+urllib3==1.25.9
+"""
+
 from bs4 import BeautifulSoup
 import requests
 import re
 import pandas as pd
 import datetime
 from tabulate import tabulate
+from termcolor import cprint
+from pyfiglet import figlet_format
+from random import choice
 
 def get_proxy():
     url = "https://free-proxy-list.net/"
@@ -46,7 +71,7 @@ def get_magnet(movie_title):
             for tr in soup.find_all("tr"):
                 text = tr.find_all("td", {'align': 'right', 'valign': None})
                 seeds.append(text)
-            
+
             try:
                 seeds.pop(0)
                 seeds.pop(-1)
@@ -71,7 +96,7 @@ def get_magnet(movie_title):
 
             size_ = soup.find_all("font", class_="detDesc")
             print(f'\nSearching for {movie_title}...')
-            
+
             results = soup.find_all('div', class_='detName')
             for x in size_:
                 size.append(str(x))
@@ -131,15 +156,15 @@ def get_magnet(movie_title):
             df.index = df.index + 1
 
             print('\nShowing results: \n')
-            
+
             print(tabulate(df.head(10), headers='keys', tablefmt='fancy_grid'))
-            
+
             show_more = str(input("Do you want to show more results? (Y/n): "))
             if show_more.lower() in ('yes', 'y'):
                 print(tabulate(df, headers='keys', tablefmt='psql'))
-            
+
             print("\nIf you want to download then input the index of the result.")
-            
+
             while True:
                 try:
                     index = int(input('Enter index of the result: '))
@@ -159,7 +184,7 @@ def get_magnet(movie_title):
             print(f'Size:            {size_movie}')
             print(f'Seeders:         {seeders_movie}')
             print(f'Leechers:        {leechers_movie}')
-            
+
 
 
             magnet_result = soup.find_all('a', title='Download this torrent using magnet')
@@ -168,12 +193,17 @@ def get_magnet(movie_title):
                 magnet_link.append(link['href'])
             download_link = magnet_link[index]
 
-            
+
             print(f"\nHere is the magnet link.\n\n{download_link}\n\n")
             input("\nPress Enter key to exit: \n")
             break
 
 
 if __name__ == "__main__":
+    color = choice(["grey", "red", "green", "yellow", "blue", "magenta", "cyan", "white"])
+
+    cprint(figlet_format('Movie Magnet', font='standard'), color, attrs=['bold', 'dark'])
+    cprint("by Fantastic Mouse", color, attrs=['bold', 'dark'])
+
     movie_title = str(input('Please enter what movie you want to search for: '))
     get_magnet(movie_title=movie_title)
