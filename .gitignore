@@ -1,4 +1,14 @@
-.vscode
+# virtual environment
 env
 .env
+
+# visual studio code specific folder
+.vscode
+
+# compiled python files
 __pycache__
+
+# package specific folders
+dist
+build
+*.egg-info
