@@ -182,7 +182,7 @@ def get_magnet(movie_title):
             magnet_link = []
             for link in magnet_result:
                 magnet_link.append(link["href"])
-            download_link = magnet_link[index]
+            download_link = magnet_link[index - 1]
 
             print(f"\nHere is the magnet link.\n\n{download_link}\n\n")
             input("\nPress Enter key to exit: \n")
