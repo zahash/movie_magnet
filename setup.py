@@ -13,7 +13,7 @@ README = (HERE / "README.md").read_text()
 setup(
     name="movie_magnet",
     version="0.0.1",
-    description="this python tool gets torrent magnet like to any movie",
+    description="Python tool to get magnet links to any movie",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/zahash/movie_magnet",
@@ -27,6 +27,14 @@ setup(
     ],
     packages=["movie_magnet"],
     include_package_data=True,
-    install_requires=["bs4", "requests", "pandas", "tabulate", "termcolor", "pyfiglet"],
+    install_requires=[
+        "bs4",
+        "requests",
+        "pandas",
+        "tabulate",
+        "termcolor",
+        "pyfiglet",
+        "lxml",
+    ],
     entry_points={"console_scripts": ["movie_magnet=movie_magnet.__main__:main",]},
 )
